@@ -1,10 +1,11 @@
 "use client";
 
 import * as React from "react";
+import { useTheme } from '@mui/material/styles';
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import { Avatar, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { Avatar, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography, Container } from "@mui/material";
 import Menu from "@mui/icons-material/Menu";
 import ArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -13,17 +14,19 @@ import HomeIcon from '@mui/icons-material/Home';
 import Link from "next/link";
 
 const sectors = [
+  { nome: "Home", route: "/home", icon: <HomeIcon /> },
   { nome: "Agendamento", route: "/agendamento", icon: <CalendarMonthIcon /> },
   { nome: "Pacientes", route: "/pacientes", icon: <PeopleIcon /> },
-  { nome: "Dashboard", route: "/dashboard", icon: <HomeIcon /> }
 ];
 
-export default function Appbar() {
+export default function Appbar({ children }: { children: React.ReactNode }) {
   const [openDrawer, setOpenDrawer] = React.useState(false);
 
   const handleOpenDrawer = () => {
     setOpenDrawer(true);
   };
+
+  const theme = useTheme();
 
   return (
     <>
@@ -46,13 +49,12 @@ export default function Appbar() {
         </AppBar>
         <Drawer anchor="left" open={openDrawer} PaperProps={{ sx: { backgroundColor: "#05773e" } }}>
           <Toolbar sx={{ background: "#05773e" }}>
-            <IconButton onClick={() => setOpenDrawer(false)} sx={{ color: "white" }}>
-              <ArrowLeft />
-            </IconButton>
             <Typography sx={{ flexGrow: 1, color: "white" }}>
               Fisio Sync
             </Typography>
-
+            <IconButton onClick={() => setOpenDrawer(false)} sx={{ color: "white" }}>
+              <ArrowLeft />
+            </IconButton>
           </Toolbar>
           <List sx={{ background: "#05773e" }}>
             {sectors.map((text) => (
@@ -67,6 +69,11 @@ export default function Appbar() {
             ))}
           </List>
         </Drawer>
+        <Box height="10vh" >
+          <Container maxWidth="lg" fixed sx={{ background: "#05773e" }}>
+            {children}
+          </Container>
+        </Box>
       </Box >
     </>
   );
