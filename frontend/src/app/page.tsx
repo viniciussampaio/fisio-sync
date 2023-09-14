@@ -1,9 +1,7 @@
-import Appbar from "@/components/Appbar/page";
+import { Typography } from '@mui/material'
 
 export default function Home() {
   return (
-    <>
-      <Appbar />
-    </>
-  );
+    <Typography>Olá, página de home!</Typography>
+  )
 }
