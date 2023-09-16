@@ -1,7 +1,11 @@
-import { Typography } from '@mui/material'
+import { Box, Typography } from "@mui/material";
+import Login from "./login/page";
 
 export default function Home() {
   return (
-    <Typography>Olá, página de home!</Typography>
-  )
+    <>
+      <Login />
+    </>
+  );
 }
+

@@ -1,4 +1,4 @@
-const connection = require("./connection");
+import connection from "./connection";
 
 const getAllPhysios = async () => {
   const [allPhysios] = await connection.execute(
@@ -7,4 +7,5 @@ const getAllPhysios = async () => {
   return allPhysios;
 };
 
-module.exports = { getAllPhysios };
+export default { getAllPhysios };
+
