@@ -1,38 +1,25 @@
 {
-  "name": "backend",
+  "name": "fisio-sync",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.ts",
+  "main": "index.js",
+  "repository": "https://github.com/viniciussampaio/fisio-sync.git",
+  "author": "Vinicius <marcussampaio123@hotmail.com>",
+  "license": "MIT",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/server.ts",
-    "dev": "ts-node-dev src/server.ts "
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/viniciussampaio/fisio-sync.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/viniciussampaio/fisio-sync/issues"
-  },
-  "homepage": "https://github.com/viniciussampaio/fisio-sync#readme",
-  "dependencies": {
-    "bcrypt": "^5.1.1",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "mysql2": "^3.6.0",
-    "ts-node": "^10.9.1",
-    "ts-node-dev": "^2.0.0"
+    "dev": "nodemon --exec ts-node ./src/index.ts"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.0",
-    "@types/cors": "^2.8.14",
     "@types/express": "^4.17.17",
-    "@types/node": "^20.6.1",
-    "eslint": "^8.48.0",
-    "nodemon": "^3.0.1"
+    "@types/node": "^20.6.2",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mysql2": "^3.6.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.17"
   }
 }
