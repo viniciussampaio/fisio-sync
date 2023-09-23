@@ -1,7 +1,5 @@
+import Appbar from "@/components/Appbar/page";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Fisio Sync - Home",
@@ -15,8 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body>
+        <Appbar>{children}</Appbar>
+      </body>
     </html>
   );
 }
-

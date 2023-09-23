@@ -1,24 +1,26 @@
+"use client";
+
 import {
   Badge,
   Box,
   Container,
   CssBaseline,
   Divider,
-  Grid,
   IconButton,
   List,
-  Paper,
   Toolbar,
   Typography,
   styled,
+  Tooltip,
+  Avatar,
 } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import LogoutIcon from "@mui/icons-material/Logout";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import React from "react";
+import React, { ReactNode } from "react";
 import { mainListItems } from "./listitem";
 
 const drawerWidth: number = 240;
@@ -50,6 +52,8 @@ const Drawer = styled(MuiDrawer, {
 })(({ theme, open }) => ({
   "& .MuiDrawer-paper": {
     position: "relative",
+    backgroundColor: "#00444F",
+    color: "white",
     whiteSpace: "nowrap",
     width: drawerWidth,
     transition: theme.transitions.create("width", {
@@ -63,7 +67,7 @@ const Drawer = styled(MuiDrawer, {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
-      width: theme.spacing(7),
+      width: theme.spacing(6),
       [theme.breakpoints.up("sm")]: {
         width: theme.spacing(9),
       },
@@ -73,7 +77,7 @@ const Drawer = styled(MuiDrawer, {
 
 const defaultTheme = createTheme();
 
-export default function Appbar() {
+export default function Appbar({ children }: { children: ReactNode }) {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -83,7 +87,11 @@ export default function Appbar() {
       <ThemeProvider theme={defaultTheme}>
         <Box sx={{ display: "flex" }}>
           <CssBaseline />
-          <AppBar position="absolute" open={open}>
+          <AppBar
+            position="absolute"
+            open={open}
+            sx={{ backgroundColor: "#00444F", color: "white" }}
+          >
             <Toolbar
               sx={{
                 pr: "24px", // keep right padding when drawer closed
@@ -97,6 +105,7 @@ export default function Appbar() {
                 sx={{
                   marginRight: "36px",
                   ...(open && { display: "none" }),
+                  color: "white",
                 }}
               >
                 <MenuIcon />
@@ -110,11 +119,22 @@ export default function Appbar() {
               >
                 Home
               </Typography>
-              <IconButton color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
+              <Box sx={{ flexGrow: 0 }}>
+                <IconButton sx={{ p: 0 }}>
+                  <Avatar
+                    alt="Foto do Fisio"
+                    src="/static/images/avatar/2.jpg"
+                  />
+                </IconButton>
+                <Tooltip title="Sair">
+                  <IconButton
+                    onClick={() => console.log("Botão de sair")}
+                    sx={{ p: 0, color: "white", ml: 2 }}
+                  >
+                    <LogoutIcon />
+                  </IconButton>
+                </Tooltip>
+              </Box>
             </Toolbar>
           </AppBar>
           <Drawer variant="permanent" open={open}>
@@ -126,7 +146,7 @@ export default function Appbar() {
                 px: [1],
               }}
             >
-              <IconButton onClick={toggleDrawer}>
+              <IconButton onClick={toggleDrawer} sx={{ color: "white" }}>
                 <ChevronLeftIcon />
               </IconButton>
             </Toolbar>
@@ -147,39 +167,7 @@ export default function Appbar() {
           >
             <Toolbar />
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={8} lg={9}>
-                  <Paper
-                    sx={{
-                      p: 2,
-                      display: "flex",
-                      flexDirection: "column",
-                      height: 240,
-                    }}
-                  >
-                    <Typography>Olá mundo!</Typography>
-                  </Paper>
-                </Grid>
-                <Grid item xs={12} md={4} lg={3}>
-                  <Paper
-                    sx={{
-                      p: 2,
-                      display: "flex",
-                      flexDirection: "column",
-                      height: 240,
-                    }}
-                  >
-                    <Typography>Olá mundo 2!</Typography>
-                  </Paper>
-                </Grid>
-                <Grid item xs={12}>
-                  <Paper
-                    sx={{ p: 2, display: "flex", flexDirection: "column" }}
-                  >
-                    <Typography>Olá mundo 3!</Typography>
-                  </Paper>
-                </Grid>
-              </Grid>
+              {children}
             </Container>
           </Box>
         </Box>
@@ -187,4 +175,3 @@ export default function Appbar() {
     </>
   );
 }
-

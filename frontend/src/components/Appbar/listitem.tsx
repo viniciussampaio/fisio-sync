@@ -9,31 +9,29 @@ import Link from "next/link";
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton>
-      <ListItemIcon>
-        {" "}
-        <HomeIcon />
-      </ListItemIcon>
-      <Link href="/login">
+    <Link href="/home">
+      <ListItemButton>
+        <ListItemIcon sx={{ color: "white" }}>
+          <HomeIcon />
+        </ListItemIcon>
         <ListItemText primary="Home" />
-      </Link>
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <CalendarMonthIcon />
-      </ListItemIcon>
-      <Link href="/agendamento">
+      </ListItemButton>
+    </Link>
+    <Link href="/agendamentos">
+      <ListItemButton>
+        <ListItemIcon sx={{ color: "white" }}>
+          <CalendarMonthIcon />
+        </ListItemIcon>
         <ListItemText primary="Agendamento" />
-      </Link>
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <Link href="/pacientes">
+      </ListItemButton>
+    </Link>
+    <Link href="/pacientes">
+      <ListItemButton>
+        <ListItemIcon sx={{ color: "white" }}>
+          <PeopleIcon />
+        </ListItemIcon>
         <ListItemText primary="Pacientes" />
-      </Link>
-    </ListItemButton>
+      </ListItemButton>
+    </Link>
   </React.Fragment>
 );
-
