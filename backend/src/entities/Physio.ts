@@ -19,4 +19,3 @@ export class Physio {
   @OneToMany(() => Patient, (patient) => patient.physio)
   patients: Patient[];
 }
-

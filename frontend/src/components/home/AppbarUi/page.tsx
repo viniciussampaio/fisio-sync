@@ -117,7 +117,7 @@ export default function Appbar({ children }: { children: ReactNode }) {
                 noWrap
                 sx={{ flexGrow: 1 }}
               >
-                Home
+                Fisio Sync
               </Typography>
               <Box sx={{ flexGrow: 0 }}>
                 <IconButton sx={{ p: 0 }}>
@@ -166,7 +166,7 @@ export default function Appbar({ children }: { children: ReactNode }) {
             }}
           >
             <Toolbar />
-            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Container maxWidth="lg" sx={{ mt: 3, mb: 4 }}>
               {children}
             </Container>
           </Box>

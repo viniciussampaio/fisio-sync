@@ -3,9 +3,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Physio } from "./Physio";
+import { Schedules } from "./Schedules";
 
 @Entity("patients")
 export class Patient {
@@ -21,5 +23,8 @@ export class Patient {
   @ManyToOne(() => Physio, (physio) => physio.patients)
   @JoinColumn({ name: "physio_id" })
   physio: Physio;
-}
 
+  @OneToMany(() => Schedules, (schedules) => schedules.patients)
+  @JoinColumn({ name: "schedules_id" })
+  schedules: Schedules;
+}
