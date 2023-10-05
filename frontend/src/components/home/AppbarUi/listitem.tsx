@@ -9,14 +9,14 @@ import Link from "next/link";
 
 export const mainListItems = (
   <React.Fragment>
-    <Link href="/home">
+    {/* <Link href="/home">
       <ListItemButton>
         <ListItemIcon sx={{ color: "white" }}>
           <HomeIcon />
         </ListItemIcon>
         <ListItemText primary="Home" />
       </ListItemButton>
-    </Link>
+    </Link> */}
     <Link href="/agendamentos">
       <ListItemButton>
         <ListItemIcon sx={{ color: "white" }}>

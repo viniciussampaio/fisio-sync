@@ -18,7 +18,6 @@ export default function Schedules() {
           Adicionar agendamento
         </Button>
       </Box>
-
       <TableShedules />
     </>
   );
