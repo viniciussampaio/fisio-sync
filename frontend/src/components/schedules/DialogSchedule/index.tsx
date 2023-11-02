@@ -44,7 +44,7 @@ export default function DialogSchedule() {
         Adicionar agendamento
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Novo agendamento</DialogTitle>
+        <DialogTitle sx={{ textAlign: "center" }}>Novo agendamento</DialogTitle>
         <DialogContent>
           <Grid
             container
@@ -94,4 +94,3 @@ export default function DialogSchedule() {
     </div>
   );
 }
-

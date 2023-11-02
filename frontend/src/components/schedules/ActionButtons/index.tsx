@@ -46,7 +46,9 @@ export default function ButtonActions() {
           </IconButton>
         </Tooltip>
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Editando dados do paciente</DialogTitle>
+          <DialogTitle sx={{ textAlign: "center" }}>
+            Editando dados do paciente
+          </DialogTitle>
           <DialogContent>
             <Grid
               container
@@ -102,7 +104,9 @@ export default function ButtonActions() {
           </IconButton>
         </Tooltip>
         <Dialog open={openDialogDelete} onClose={handleCloseOpenDeleteDialog}>
-          <DialogTitle>Você deseja excluir este agendamento?</DialogTitle>
+          <DialogTitle sx={{ textAlign: "center" }}>
+            Você deseja excluir este agendamento?
+          </DialogTitle>
           <DialogContent>
             <DialogActions>
               <Button onClick={handleCloseOpenDeleteDialog} color="inherit">
@@ -121,4 +125,3 @@ export default function ButtonActions() {
     </Box>
   );
 }
-
