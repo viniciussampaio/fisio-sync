@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Badge,
   Box,
   Container,
   CssBaseline,
@@ -12,7 +11,6 @@ import {
   Typography,
   styled,
   Tooltip,
-  Avatar,
 } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
@@ -22,6 +20,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import React, { ReactNode } from "react";
 import { mainListItems } from "./listitem";
+import { useRouter } from "next/navigation";
 
 const drawerWidth: number = 240;
 
@@ -79,6 +78,12 @@ const defaultTheme = createTheme();
 
 export default function Appbar({ children }: { children: ReactNode }) {
   const [open, setOpen] = React.useState(true);
+  const router = useRouter();
+
+  const redirectLogin = () => {
+    router.push("/login");
+  };
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -120,15 +125,9 @@ export default function Appbar({ children }: { children: ReactNode }) {
                 Fisio Sync
               </Typography>
               <Box sx={{ flexGrow: 0 }}>
-                <IconButton sx={{ p: 0 }}>
-                  <Avatar
-                    alt="Foto do Fisio"
-                    src="/static/images/avatar/2.jpg"
-                  />
-                </IconButton>
                 <Tooltip title="Sair">
                   <IconButton
-                    onClick={() => console.log("Botão de sair")}
+                    onClick={redirectLogin}
                     sx={{ p: 0, color: "white", ml: 2 }}
                   >
                     <LogoutIcon />

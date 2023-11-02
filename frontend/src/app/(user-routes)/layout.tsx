@@ -2,8 +2,7 @@ import Appbar from "@/components/home/AppbarUi/page";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Fisio Sync - Home",
-  description: "Home",
+  title: "Fisio Sync",
 };
 
 export default function RootLayout({

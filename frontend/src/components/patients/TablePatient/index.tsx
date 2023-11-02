@@ -8,41 +8,32 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import ButtonActions from "../ActionButtons/buttonActions";
+import ActionButtons from "@/components/schedules/ActionButtons";
 
 interface Data {
-  calories: string;
-  carbs: string;
-  fat: string;
+  physioResponsable: string;
   name: string;
 }
 
-function createData(
-  name: string,
-  calories: string,
-  fat: string,
-  carbs: string
-): Data {
+function createData(name: string, physioResponsable: string): Data {
   return {
     name,
-    calories,
-    fat,
-    carbs,
+    physioResponsable,
   };
 }
 
 const rows = [
-  createData("Ana Maria", "Adriano Silva", "20/08/2023", "28/08/2023"),
-  createData("Bianca Lessa", "Adriano Silva", "09/08/2023", "15/08/2023"),
-  createData("Camila Lima", "Alexandra Batista", "12/08/2023", "20/08/2023"),
-  createData("Daniela Silva", "Juliana Montenegro", "24/07/2023", "13/08/2023"),
-  createData("Eduardo Miron", "Juliana Montenegro", "03/08/2023", "18/08/2023"),
-  createData("Fabio Lima", "Sabrina Mendes", "28/07/2023", "16/08/2023"),
-  createData("Gabriel Dias", "Sabrina Mendes", "01/08/2023", "19/08/2023"),
-  createData("Hugo Lins", "João Matos", "02/07/2023", "20/07/2023"),
-  createData("Igor Santana", "Leandro Silva", "27/06/2023", "20/07/2023"),
-  createData("Joana Santos", "Matheus Pereira", "12/07/2023", "01/08/2023"),
-  createData("Joana Santos", "Matheus Pereira", "12/07/2023", "01/08/2023"),
+  createData("Ana Maria", "Adriano Silva"),
+  createData("Bianca Lessa", "Adriano Silva"),
+  createData("Camila Lima", "Alexandra Batista"),
+  createData("Daniela Silva", "Juliana Montenegro"),
+  createData("Eduardo Miron", "Juliana Montenegro"),
+  createData("Fabio Lima", "Sabrina Mendes"),
+  createData("Gabriel Dias", "Sabrina Mendes"),
+  createData("Hugo Lins", "João Matos"),
+  createData("Igor Santana", "Leandro Silva"),
+  createData("Joana Santos", "Matheus Pereira"),
+  createData("Joana Santos", "Matheus Pereira"),
 ];
 
 function stableSort<T>(array: readonly T[]) {
@@ -50,12 +41,12 @@ function stableSort<T>(array: readonly T[]) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function TableShedules() {
+export default function TablePatient() {
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+  const handleClick = (name: string) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected: readonly string[] = [];
 
@@ -109,33 +100,27 @@ export default function TableShedules() {
                   Fisioterapeuta Responsável
                 </TableCell>
                 <TableCell align="center" sx={{ fontWeight: "bold" }}>
-                  Sessão Anterior
-                </TableCell>
-                <TableCell align="center" sx={{ fontWeight: "bold" }}>
-                  Próxima sessão
-                </TableCell>
-                <TableCell align="center" sx={{ fontWeight: "bold" }}>
                   Ações
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {visibleRows.map((row, index) => {
+              {visibleRows.map((row) => {
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.name)}
+                    onClick={() => handleClick(row.name)}
                     tabIndex={-1}
                     key={row.name}
                   >
                     <TableCell component="th" scope="row" align="center">
                       {row.name}
                     </TableCell>
-                    <TableCell align="center">{row.calories}</TableCell>
-                    <TableCell align="center">{row.fat}</TableCell>
-                    <TableCell align="center">{row.carbs}</TableCell>
                     <TableCell align="center">
-                      <ButtonActions />
+                      {row.physioResponsable}
+                    </TableCell>
+                    <TableCell align="center">
+                      <ActionButtons />
                     </TableCell>
                   </TableRow>
                 );

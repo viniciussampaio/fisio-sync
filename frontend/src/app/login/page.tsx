@@ -10,7 +10,7 @@ export default function Login() {
   const router = useRouter();
 
   const handleSubmit = () => {
-    router.push("/home");
+    router.push("/agendamentos");
   };
 
   return (

@@ -1,8 +1,7 @@
 "use client";
+import { Box } from "@mui/material";
+import TablePatient from "@/components/patients/TablePatient";
 
-import TableShedules from "@/components/schedules/Table/page";
-import { Box, Button } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
 
 export default function Patients() {
   return (
@@ -12,14 +11,8 @@ export default function Patients() {
           mb: 2,
           textAlign: "end",
         }}
-      >
-        <Button variant="contained">
-          <AddIcon sx={{ mr: 1 }} />
-          Adicionar paciente
-        </Button>
-      </Box>
-
-      <TableShedules />
+      />
+      <TablePatient />
     </>
   );
 }

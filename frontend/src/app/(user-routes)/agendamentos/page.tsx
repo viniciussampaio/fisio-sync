@@ -1,8 +1,8 @@
 "use client";
 
-import { Box, Button } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import TableShedules from "@/components/schedules/Table/page";
+import { Box } from "@mui/material";
+import TableShedules from "@/components/schedules/Table";
+import DialogSchedule from "@/components/schedules/DialogSchedule";
 
 export default function Schedules() {
   return (
@@ -13,10 +13,7 @@ export default function Schedules() {
           textAlign: "end",
         }}
       >
-        <Button variant="contained">
-          <AddIcon sx={{ mr: 1 }} />
-          Adicionar agendamento
-        </Button>
+        <DialogSchedule />
       </Box>
       <TableShedules />
     </>
