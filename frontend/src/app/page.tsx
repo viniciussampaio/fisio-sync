@@ -1,9 +1,3 @@
-import Appbar from "@/components/Appbar/page";
-
-export default function Home() {
-  return (
-    <>
-      <Appbar />
-    </>
-  );
+export default function Redirect() {
+  return <></>;
 }
