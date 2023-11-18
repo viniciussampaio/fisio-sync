@@ -8,6 +8,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(routeSchedules);
 
