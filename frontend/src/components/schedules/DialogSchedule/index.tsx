@@ -7,16 +7,13 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import AddIcon from "@mui/icons-material/Add";
 import { Grid } from "@mui/material";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateField } from "@mui/x-date-pickers";
+import api from "@/services/api";
 
 export default function DialogSchedule() {
   const [open, setOpen] = React.useState(false);
-  const [selectedDate, setSelectedDate] = React.useState<Date | null>(null);
-  const [name, setName] = React.useState<String>("");
-  const [physio, setPhysio] = React.useState<String>("");
+  const [namePatient, setNamePatient] = React.useState("");
+  const [physioResponsable, setPhysioResponsable] = React.useState("");
+  const [nextSession, setNextSession] = React.useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -27,14 +24,15 @@ export default function DialogSchedule() {
   };
 
   const insertSchedule = () => {
-    try {
-      const response = {
-        body: { selectedDate, name, physio },
-      };
-      console.log(response);
-    } catch (e) {
-      console.log(e);
-    }
+    api.post("/create-schedules", {
+      namePatient,
+      physioResponsable,
+      nextSession,
+    });
+    setTimeout(() => {
+      handleClose();
+      window.location.reload();
+    }, 1000);
   };
 
   return (
@@ -51,38 +49,36 @@ export default function DialogSchedule() {
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <TextField
                 autoFocus
                 id="namePatient"
                 label="Nome do Paciente"
                 type="text"
                 variant="standard"
-                value={name}
-                onChange={(text) => setName(text.target.value)}
+                value={namePatient}
+                onChange={(text) => setNamePatient(text.target.value)}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <TextField
-                autoFocus
-                id="physio"
+                id="physioResponsable"
                 label="Fisioterapeuta Responsável"
                 type="text"
                 variant="standard"
-                value={physio}
-                onChange={(text) => setPhysio(text.target.value)}
+                value={physioResponsable}
+                onChange={(text) => setPhysioResponsable(text.target.value)}
               />
             </Grid>
-            <Grid item xs={6}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={["DateField"]}>
-                  <DateField
-                    label="Próxima Sessão"
-                    variant="standard"
-                    format="DD-MM-YYYY"
-                  />
-                </DemoContainer>
-              </LocalizationProvider>
+            <Grid item xs={4}>
+              <TextField
+                id="nextSession"
+                label="Primeira sessão"
+                variant="standard"
+                type="text"
+                value={nextSession}
+                onChange={(text) => setNextSession(text.target.value)}
+              />
             </Grid>
           </Grid>
         </DialogContent>

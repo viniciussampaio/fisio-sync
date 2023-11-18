@@ -14,13 +14,18 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogActions from "@mui/material/DialogActions";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { DateField, LocalizationProvider } from "@mui/x-date-pickers";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import api from "@/services/api";
 
-export default function ButtonActions() {
+interface ButtonProps {
+  idPatient: string;
+}
+
+export default function ButtonActions(idPatient: ButtonProps) {
   const [open, setOpen] = React.useState(false);
   const [openDialogDelete, setOpenDialogDelete] = React.useState(false);
+  const [nextSession, setNextSession] = React.useState("");
+  const [namePatient, setNamePatient] = React.useState("");
+  const [physioResponsable, setPhysioResponsable] = React.useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -37,6 +42,26 @@ export default function ButtonActions() {
   const handleCloseOpenDeleteDialog = () => {
     setOpenDialogDelete(false);
   };
+
+  const updateSchedule = () => {
+    api.put(`/update-schedules/${idPatient.idPatient}`, {
+      namePatient,
+      physioResponsable,
+    });
+    setTimeout(() => {
+      handleClose();
+      window.location.reload();
+    }, 1000);
+  };
+
+  const deleteSchedule = () => {
+    api.delete(`/remove-schedules/${idPatient.idPatient}`);
+    setTimeout(() => {
+      handleClose();
+      window.location.reload();
+    }, 1000);
+  };
+
   return (
     <Box sx={{ textAlign: "center" }}>
       <Container>
@@ -45,6 +70,7 @@ export default function ButtonActions() {
             <EditIcon />
           </IconButton>
         </Tooltip>
+
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle sx={{ textAlign: "center" }}>
             Editando dados do paciente
@@ -55,34 +81,36 @@ export default function ButtonActions() {
               rowSpacing={1}
               columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             >
-              <Grid item xs={6}>
+              <Grid item xs={4}>
                 <TextField
                   autoFocus
                   id="namePatient"
                   label="Nome do Paciente"
                   type="text"
                   variant="standard"
+                  value={namePatient}
+                  onChange={(text) => setNamePatient(text.target.value)}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={4}>
                 <TextField
-                  autoFocus
-                  id="physio"
+                  id="physioResponsable"
                   label="Fisioterapeuta Responsável"
                   type="text"
                   variant="standard"
+                  value={physioResponsable}
+                  onChange={(text) => setPhysioResponsable(text.target.value)}
                 />
               </Grid>
-              <Grid item xs={6}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DemoContainer components={["DateField"]}>
-                    <DateField
-                      label="Próxima Sessão"
-                      variant="standard"
-                      format="DD-MM-YYYY"
-                    />
-                  </DemoContainer>
-                </LocalizationProvider>
+              <Grid item xs={4}>
+                <TextField
+                  id="nextSession"
+                  label="Primeira sessão"
+                  variant="standard"
+                  type="text"
+                  value={nextSession}
+                  onChange={(text) => setNextSession(text.target.value)}
+                />
               </Grid>
             </Grid>
           </DialogContent>
@@ -90,10 +118,7 @@ export default function ButtonActions() {
             <Button onClick={handleClose} color="inherit">
               Cancelar
             </Button>
-            <Button
-              onClick={() => console.log("marcar agendamento")}
-              color="primary"
-            >
+            <Button onClick={updateSchedule} color="primary">
               Salvar
             </Button>
           </DialogActions>
@@ -112,10 +137,7 @@ export default function ButtonActions() {
               <Button onClick={handleCloseOpenDeleteDialog} color="inherit">
                 Cancelar
               </Button>
-              <Button
-                onClick={() => console.log("confirmar exclusão")}
-                color="error"
-              >
+              <Button onClick={deleteSchedule} color="error">
                 Excluir
               </Button>
             </DialogActions>
