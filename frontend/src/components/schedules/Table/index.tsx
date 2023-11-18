@@ -9,41 +9,14 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import ActionButtons from "../ActionButtons";
+import api from "@/services/api";
 
-interface Data {
-  calories: string;
-  carbs: string;
-  fat: string;
-  name: string;
+interface ScheduleProps {
+  idPatient: string;
+  namePatient: string;
+  physioResponsable: string;
+  nextSession: string;
 }
-
-function createData(
-  name: string,
-  calories: string,
-  fat: string,
-  carbs: string
-): Data {
-  return {
-    name,
-    calories,
-    fat,
-    carbs,
-  };
-}
-
-const rows = [
-  createData("Ana Maria", "Adriano Silva", "20/08/2023", "28/08/2023"),
-  createData("Bianca Lessa", "Adriano Silva", "09/08/2023", "15/08/2023"),
-  createData("Camila Lima", "Alexandra Batista", "12/08/2023", "20/08/2023"),
-  createData("Daniela Silva", "Juliana Montenegro", "24/07/2023", "13/08/2023"),
-  createData("Eduardo Miron", "Juliana Montenegro", "03/08/2023", "18/08/2023"),
-  createData("Fabio Lima", "Sabrina Mendes", "28/07/2023", "16/08/2023"),
-  createData("Gabriel Dias", "Sabrina Mendes", "01/08/2023", "19/08/2023"),
-  createData("Hugo Lins", "João Matos", "02/07/2023", "20/07/2023"),
-  createData("Igor Santana", "Leandro Silva", "27/06/2023", "20/07/2023"),
-  createData("Joana Santos", "Matheus Pereira", "12/07/2023", "01/08/2023"),
-  createData("Joana Santos", "Matheus Pereira", "12/07/2023", "01/08/2023"),
-];
 
 function stableSort<TS>(array: readonly TS[]) {
   const stabilizedThis = array.map((el, index) => [el, index] as [TS, number]);
@@ -54,6 +27,20 @@ export default function TableShedules() {
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [schedules, setSchedules] = React.useState<ScheduleProps[]>([]);
+
+  const getAllSchedules = async () => {
+    try {
+      const { data } = await api.get("/schedules");
+      setSchedules(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  React.useEffect(() => {
+    getAllSchedules();
+  }, []);
 
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
     const selectedIndex = selected.indexOf(name);
@@ -88,11 +75,11 @@ export default function TableShedules() {
 
   const visibleRows = React.useMemo(
     () =>
-      stableSort(rows).slice(
+      stableSort(schedules).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
-    [page, rowsPerPage]
+    [page, rowsPerPage, schedules]
   );
 
   return (
@@ -112,30 +99,28 @@ export default function TableShedules() {
                   Sessão Anterior
                 </TableCell>
                 <TableCell align="center" sx={{ fontWeight: "bold" }}>
-                  Próxima sessão
-                </TableCell>
-                <TableCell align="center" sx={{ fontWeight: "bold" }}>
                   Ações
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {visibleRows.map((row, index) => {
+              {visibleRows.map((schedule) => {
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.name)}
+                    onClick={(event) => handleClick(event, schedule.idPatient)}
                     tabIndex={-1}
-                    key={row.name}
+                    key={schedule.idPatient}
                   >
                     <TableCell component="th" scope="row" align="center">
-                      {row.name}
+                      {schedule.namePatient}
                     </TableCell>
-                    <TableCell align="center">{row.calories}</TableCell>
-                    <TableCell align="center">{row.fat}</TableCell>
-                    <TableCell align="center">{row.carbs}</TableCell>
                     <TableCell align="center">
-                      <ActionButtons />
+                      {schedule.physioResponsable}
+                    </TableCell>
+                    <TableCell align="center">{schedule.nextSession}</TableCell>
+                    <TableCell align="center">
+                      <ActionButtons idPatient={schedule.idPatient} />
                     </TableCell>
                   </TableRow>
                 );
@@ -146,7 +131,7 @@ export default function TableShedules() {
         <TablePagination
           rowsPerPageOptions={[5, 8]}
           component="div"
-          count={rows.length}
+          count={schedules.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -156,4 +141,3 @@ export default function TableShedules() {
     </Box>
   );
 }
-
