@@ -8,45 +8,41 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import ActionButtons from "@/components/schedules/ActionButtons";
+import ActionButtons from "../../schedules/ActionButtons";
+import api from "@/services/api";
 
-interface Data {
+interface ScheduleProps {
+  idPatient: string;
+  namePatient: string;
   physioResponsable: string;
-  name: string;
+  nextSession: string;
 }
 
-function createData(name: string, physioResponsable: string): Data {
-  return {
-    name,
-    physioResponsable,
-  };
-}
-
-const rows = [
-  createData("Ana Maria", "Adriano Silva"),
-  createData("Bianca Lessa", "Adriano Silva"),
-  createData("Camila Lima", "Alexandra Batista"),
-  createData("Daniela Silva", "Juliana Montenegro"),
-  createData("Eduardo Miron", "Juliana Montenegro"),
-  createData("Fabio Lima", "Sabrina Mendes"),
-  createData("Gabriel Dias", "Sabrina Mendes"),
-  createData("Hugo Lins", "João Matos"),
-  createData("Igor Santana", "Leandro Silva"),
-  createData("Joana Santos", "Matheus Pereira"),
-  createData("Joana Santos", "Matheus Pereira"),
-];
-
-function stableSort<T>(array: readonly T[]) {
-  const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
+function stableSort<TS>(array: readonly TS[]) {
+  const stabilizedThis = array.map((el, index) => [el, index] as [TS, number]);
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function TablePatient() {
+export default function TableShedules() {
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [schedules, setSchedules] = React.useState<ScheduleProps[]>([]);
 
-  const handleClick = (name: string) => {
+  const getAllSchedules = async () => {
+    try {
+      const { data } = await api.get("/schedules");
+      setSchedules(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  React.useEffect(() => {
+    getAllSchedules();
+  }, []);
+
+  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected: readonly string[] = [];
 
@@ -79,11 +75,11 @@ export default function TablePatient() {
 
   const visibleRows = React.useMemo(
     () =>
-      stableSort(rows).slice(
+      stableSort(schedules).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
-    [page, rowsPerPage]
+    [page, rowsPerPage, schedules]
   );
 
   return (
@@ -105,22 +101,22 @@ export default function TablePatient() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {visibleRows.map((row) => {
+              {visibleRows.map((schedule) => {
                 return (
                   <TableRow
                     hover
-                    onClick={() => handleClick(row.name)}
+                    onClick={(event) => handleClick(event, schedule.idPatient)}
                     tabIndex={-1}
-                    key={row.name}
+                    key={schedule.idPatient}
                   >
                     <TableCell component="th" scope="row" align="center">
-                      {row.name}
+                      {schedule.namePatient}
                     </TableCell>
                     <TableCell align="center">
-                      {row.physioResponsable}
+                      {schedule.physioResponsable}
                     </TableCell>
                     <TableCell align="center">
-                      <ActionButtons />
+                      <ActionButtons idPatient={schedule.idPatient} />
                     </TableCell>
                   </TableRow>
                 );
@@ -131,7 +127,7 @@ export default function TablePatient() {
         <TablePagination
           rowsPerPageOptions={[5, 8]}
           component="div"
-          count={rows.length}
+          count={schedules.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -141,4 +137,3 @@ export default function TablePatient() {
     </Box>
   );
 }
-

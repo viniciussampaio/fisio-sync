@@ -15,7 +15,7 @@ export default function Login() {
     setLoading(true);
     setTimeout(() => {
       router.push("/agendamentos");
-    }, 2000);
+    }, 1500);
   };
 
   return (
