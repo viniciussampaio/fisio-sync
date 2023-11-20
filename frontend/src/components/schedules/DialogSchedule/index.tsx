@@ -83,7 +83,9 @@ export default function DialogSchedule() {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancelar</Button>
+          <Button onClick={handleClose} color="inherit">
+            Cancelar
+          </Button>
           <Button onClick={insertSchedule}>Marcar</Button>
         </DialogActions>
       </Dialog>
