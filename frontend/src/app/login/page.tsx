@@ -9,9 +9,12 @@ import LoadingButton from "@mui/lab/LoadingButton";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
 
   const handleSubmit = () => {
+    localStorage.setItem("Email", JSON.stringify(email));
     setLoading(true);
     setTimeout(() => {
       router.push("/agendamentos");
@@ -49,28 +52,48 @@ export default function Login() {
                 id="email"
                 label="Seu e-mail"
                 name="email"
+                value={email}
+                onChange={(text) => setEmail(text.target.value)}
                 autoComplete="email"
                 autoFocus
+                required
               />
               <TextField
                 margin="normal"
                 fullWidth
+                required
                 name="password"
                 label="Senha"
                 type="password"
+                value={password}
+                onChange={(text) => setPassword(text.target.value)}
                 id="password"
                 autoComplete="current-password"
               />
-              <LoadingButton
-                type="submit"
-                fullWidth
-                variant="contained"
-                onClick={handleSubmit}
-                sx={{ mt: 3, mb: 2, background: "#084d6e" }}
-                loading={loading}
-              >
-                Entrar
-              </LoadingButton>
+              {email && password != "" ? (
+                <LoadingButton
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  onClick={handleSubmit}
+                  sx={{ mt: 3, mb: 2, background: "#084d6e" }}
+                  loading={loading}
+                >
+                  Entrar
+                </LoadingButton>
+              ) : (
+                <LoadingButton
+                  type="submit"
+                  fullWidth
+                  disabled
+                  variant="contained"
+                  onClick={handleSubmit}
+                  sx={{ mt: 3, mb: 2, background: "#084d6e" }}
+                  loading={loading}
+                >
+                  Entrar
+                </LoadingButton>
+              )}
             </Box>
           </Grid>
         </Grid>

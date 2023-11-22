@@ -35,8 +35,18 @@ export default function DialogSchedule() {
     }, 1000);
   };
 
+  const insertScheduleValitaded = () => {
+    const emailStorage = localStorage.getItem("Email");
+
+    if (!emailStorage) {
+      alert("Não tem permissão para cadastrar!!!");
+    } else {
+      insertSchedule();
+    }
+  };
+
   return (
-    <div>
+    <>
       <Button variant="contained" onClick={handleClickOpen}>
         <AddIcon sx={{ mr: 1 }} />
         Adicionar agendamento
@@ -86,9 +96,9 @@ export default function DialogSchedule() {
           <Button onClick={handleClose} color="inherit">
             Cancelar
           </Button>
-          <Button onClick={insertSchedule}>Marcar</Button>
+          <Button onClick={insertScheduleValitaded}>Marcar</Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 }
