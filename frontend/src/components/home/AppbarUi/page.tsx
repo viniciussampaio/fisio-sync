@@ -81,6 +81,7 @@ export default function Appbar({ children }: { children: ReactNode }) {
   const router = useRouter();
 
   const redirectLogin = () => {
+    localStorage.removeItem("Email");
     router.push("/login");
   };
 

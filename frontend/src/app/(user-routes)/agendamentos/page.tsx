@@ -6,7 +6,7 @@ import DialogSchedule from "@/components/schedules/DialogSchedule";
 
 export default function Schedules() {
   return (
-    <>
+    <div>
       <Box
         sx={{
           mb: 2,
@@ -16,7 +16,6 @@ export default function Schedules() {
         <DialogSchedule />
       </Box>
       <TableShedules />
-    </>
+    </div>
   );
 }
-
