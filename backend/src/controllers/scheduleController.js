@@ -25,15 +25,10 @@ const updateSchedule = async (req, res) => {
   return res.status(204).json();
 };
 
-const login = async (req) => {
-  console.log(req.body.login);
-};
-
 module.exports = {
   getAllSchedules,
   createSchedule,
   deleteSchedule,
   updateSchedule,
-  login,
 };
 

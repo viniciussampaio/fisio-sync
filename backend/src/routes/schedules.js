@@ -19,7 +19,5 @@ routeSchedules.put(
   scheduleController.updateSchedule
 );
 
-routeSchedules.post("/login", scheduleController.login);
-
 module.exports = routeSchedules;
 
